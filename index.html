@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>小明订座</title>
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/common.css">
+	<link href="css/jquery.searchableSelect.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/kuCity.css">
+  <link rel="stylesheet" href="css/flatpickr.min.css">
+  <script src="js/jquery-3.1.1.js"></script>
+  <script src="js/jquery.searchableSelect.js"></script>
+  <script src="js/angular.js"></script>
+  <script src="js/kuCity.js"></script>
+	<script src="js/flatpickr.min.js"></script>
+  <script src="js/main.js"></script>
+</head>
+<body ng-app="main" ng-controller="mainContent" class="app" ng-click="hideLogin()">
+	<div id="header">
+		<ul class="top">
+			<li class="loginBtn" ng-click="login($event)">{{loginBtnText}}</li>
+			<li class="register" ng-if="topShow"><a href="register.html">注册</a></li>
+			<!-- <li class="userMsg" ng-if="topShow2"><a href="###">用户中心</a></li> -->
+			<li class="exit" ng-if="topShow2" ng-click="loginOut()">退出</li>
+		</ul>
+		<div class="middle">
+			<ul class="left">
+				<li>小明订座</li>
+				<li><input type="text" class="city" value="广州"></li>
+			</ul>
+			<div class="right">
+				<a ng-click="ordersClick()">我的订座</a>
+			</div>
+		</div>
+		<form onsubmit="return postData()" class="login" id="myLogin" ng-if="showLoginBox" ng-click="formClick($event)">
+			<input type="text" placeholder="用户名" name="userName">
+			<input type="password" placeholder="密码" name="password">
+			<input type="submit" value="登录" class="submit">
+			<a href="###" class="find">找回密码</a>
+			<img src="img/cancel.png" alt="" class="lcancel"  ng-click="hideLogin()">
+		</form>
+	</div>
+	<div id="main">
+		<div class="search">
+			<p>吃饭不用排队，提前订座找小明</p>
+			<p><span>提前28天可定</span><span>订座成功100%有座</span><span>专享预定优惠</span></p>
+			<div class="serh">
+				<input class="flatpickr" type="text" placeholder="日期">
+				<select id="select">
+					<option value="1">1人</option>
+		      <option value="2">2人</option>
+		      <option value="3">3人</option>
+		      <option value="4">4人</option>
+		      <option value="5">5人</option>
+		      <option value="6">6人</option>
+		      <option value="7">7人</option>
+		      <option value="8">8人</option>
+		      <option value="9">9人</option>
+		      <option value="10">10人</option>
+				</select>		
+				<input type="text" class="search-text" placeholder="餐厅名">
+				<a href="search.html">找可订座餐厅</a>
+			</div>
+		</div>
+
+		<div class="content" >
+			<div class="hot">
+				<h3>热门餐厅</h3>
+				<ul>
+					<li ng-repeat="item in hotData track by $index" class="list-item" ng-click="itemClick($event,item.id)">
+						<img ng-src="{{item.imgSrc1}}" alt="">
+						<div>
+							<p>{{item.title}}</p>
+							<img src="img/range.png" alt="">
+							<p><span>口味{{item.score1}}</span><span>环境{{item.score2}}</span><span>服务{{item.score3}}</span></p>
+							<p>{{item.address}}</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="choice">
+				<h3>精选餐厅</h3>
+				<ul>
+					<li ng-repeat="item in selectData track by $index" class="list-item" ng-click="itemClick($event,item.id)">
+						<img ng-src="{{item.imgSrc1}}" alt="">
+						<div>
+							<p>{{item.title}}</p>
+							<img src="img/range.png" alt="">
+							<p><span>口味{{item.score1}}</span><span>环境{{item.score2}}</span><span>服务{{item.score3}}</span></p>
+							<p>{{item.address}}</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<div class="new">
+				<h3>最新可定</h3>
+				<ul>
+					<li ng-repeat="item in newData track by $index" class="list-item" ng-click="itemClick($event,item.id)">
+						<img ng-src="{{item.imgSrc1}}" alt="">
+						<div>
+							<p>{{item.title}}</p>
+							<img src="img/range.png" alt="">
+							<p><span>口味{{item.score1}}</span><span>环境{{item.score2}}</span><span>服务{{item.score3}}</span></p>
+							<p>{{item.address}}</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+
+		<!--餐厅详细页-->
+	<div class="resDetail">
+		<div class="showDetail">
+			 <ul class="top">
+			 	<li class="topActive" id="0">餐厅详情</li>
+			 	<li id="1">菜单</li>
+			 	<li id="2">订座</li>
+			 	<li id="3"><img src="img/cancel.png" alt=""></li>
+			 </ul>
+				 <ul class="detailContent">
+				 	<li class="show"><ul>
+				 		<li><h3>{{detailData.title}}</h3>  <img src="" alt=""></li>
+				 		<li>别名：{{detailData.alias}}</li>
+				 		<li><img src="img/range.png" alt=""></li>
+				 		<li>人均：{{detailData.money}} | 口味：{{detailData.score1}} | 环境：{{detailData.score2}} | 服务：{{detailData.score3}}</li>
+				 		<li>地址： {{detailData.address}}</li>
+				 		<li>电话：{{detailData.phone}}</li>
+				 		<li>营业时间： {{detailData.time}}</li>
+				 		<li>
+				 			<img ng-src="{{detailData.imgSrc1}}" alt="">
+				 			<img ng-src="{{detailData.imgSrc2}}" alt="">
+				 			<img ng-src="{{detailData.imgSrc3}}" alt="">
+
+				 		</li>
+				 	</ul>
+				 	<div class="S-C"><img src="img/share.png" alt="" class="share"><img ng-click="collectClick()" class="collect" src="img/collect.png" alt=""></div>
+			 	</li>
+			 	<li class="menu">
+			 		<div ng-repeat="menuItem in detailMenu">
+			 			<img ng-src="{{menuItem.img}}" alt="">
+			 			{{menuItem.title}}
+			 		</div>
+			 	</li>
+			 	<li class="book">
+			 		<ul>
+			 		<form class="order" onsubmit="return addOrder()">
+			 			<li>时间：<input class="flatpickr" type="text" placeholder="日期" name="time"></li>
+			 			<li>人数：
+							<select class="selectPeople" name="peopleNum">
+								<option value="1">1人</option>
+					      <option value="2">2人</option>
+					      <option value="3">3人</option>
+					      <option value="4">4人</option>
+					      <option value="5">5人</option>
+					      <option value="6">6人</option>
+					      <option value="7">7人</option>
+					      <option value="8">8人</option>
+					      <option value="9">9人</option>
+					      <option value="10">10人</option>
+							</select>
+			 			</li>
+						<li>联系人：<input type="text" placeholder="您贵姓" required name="name"> 
+								<input type="radio" value="women" name="sex">女士<input type="radio" value="man" name="sex">男士
+						</li>
+						<li>手机号：<input type="text" placeholder="您的手机号" required name="phone" type="number"></li>
+						<li> <input type="checkbox" name="helpOther"> 我要帮别人订座</li>
+			 		</ul>
+			 		<button type="submit">提交订单</button>
+			 	</form>
+			 	</li>
+			 </ul>
+		</div>
+	</div>
+
+
+	</div>
+	<div id="footer">
+		<p>©2016-2017 dianping.com, All Rights Reserved.</p>　　
+		<p>本站发布的所有内容，未经许可，不得转载，详见《知识产权声明》。</p>
+	</div>
+
+
+
+	
+</body>
+</html>

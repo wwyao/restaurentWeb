@@ -1,0 +1,53 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+.header{
+	padding:20px 0 20px 50px;
+	border-bottom: 1px solid #4DA71A;
+}
+.header span{
+	display: inline-block;
+	font-size: 25px;
+	border-left: 1px solid #B5B5C0;
+	padding: 0 20px; 
+}
+.header span:first-child{
+	padding: 5px 0px 20px 42px;
+	background: url(../img/logo.jpg) no-repeat;
+	background-size: 40px 50px;
+	font-size: 35px;
+	color: #3E9A05;
+	border-left: none;
+}
+.form{
+	margin: 100px auto;
+	text-align: center;
+	width: 600px;
+	/*background: red;*/
+}
+.form label{
+	display: inline-block;
+	margin-bottom: 30px;
+	width: 100px;
+	font-size: 18px;
+	text-align: right;
+}
+.form input{
+	display: inline-block;
+	width: 200px;
+	height: 30px;
+	font-size: 18px;
+}
+.form button{
+	margin: 30px 0 0 50px;
+	width: 150px;
+	height: 30px;
+	font-size: 16px;
+	color:#fff;
+	border-radius: 5px;
+	background: #F94D46;
+	border: none;
+	box-shadow: 2px 2px 10px 0 #F94D46;
+	outline: none;
+}

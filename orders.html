@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>订单详情</title>
+	<link rel="stylesheet" href="css/order.css">
+	<link rel="stylesheet" type="text/css" href="css/xcConfirm.css"/>
+	<script src="js/jquery-3.1.1.js"></script>
+	<script src="js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/angular.js"></script>
+	<script src="js/order.js"></script>
+</head>
+<body ng-app="order">
+	<div class="header">
+		<span>小明订座</span><span>订单详情</span>
+	</div>
+	<div class="main">
+		<div class="nav">
+			<span class="active">未付款的订单</span><!--
+			--><span>预定成功的订单</span><!--
+			--><span>其它订单</span>-=-==
+		</div>
+		<ul class="list" ng-controller="orders">
+			<li ng-repeat="item in showData" class="list-item">
+				<img ng-src="{{item.imgSrc}}" alt="">
+				<div class="left" >
+					<p>{{item.name}}</p>
+					<p>状态：{{item.statu}}</p>
+					<p>预定时间：{{item.time}}</p>
+					<p>预定人数：{{item.peopleNum}}</p>
+					<p>定金：{{item.bookMoney}}</p>
+					<p>联系方式：{{item.phone}} {{item.name}}</p>
+				</div>
+				<div class="right">
+					<button class="pay" ng-click="payClick($event)" id="{{item.orderId}}">付款</button>
+					<button id="{{item.orderId}}" class="cancel" ng-click="cancelClick($event)">取消订单</button>
+				</div>
+
+			</li>
+		</ul>
+	</div>
+	<!-- <div id="footer">
+		<p>©2016-2017 dianping.com, All Rights Reserved.</p>　　
+		<p>本站发布的所有内容，未经许可，不得转载，详见《知识产权声明》。</p>
+	</div> -->
+</body>
+</html>
