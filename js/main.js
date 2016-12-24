@@ -70,10 +70,12 @@ function addOrder(){
 	if(scope.loginBtnText === "登录"){
 		alert('请先登录！');
 	}else{
+		console.log($('.order').serialize()+'&statu=0&userName='+scope.loginBtnText+'&restaurentName=aszdas'+'&restaurentId='+scope.detailData.id+'&bookMoney=RMB15');
 		$.ajax({
 			type: 'POST',
 			url: 'http://localhost:8080/restaurentServer/AddOrder',
-			data: $('.order').serialize()+'&statu=未付款&userName='+scope.loginBtnText,
+//			data: $('.order').serialize()+'&statu=0&userName='+scope.loginBtnText+'&restaurentName='+scope.detailData.title+'&restaurentId='+scope.detailData.id+'&bookMoney=15',
+			data: $('.order').serialize()+'&statu=0&userName='+scope.loginBtnText+'&restaurentName=aszdas'+'&restaurentId='+scope.detailData.id+'&bookMoney=RMB15',
 			success: function(msg) {
 				alert('提交订单成功！');
 			},

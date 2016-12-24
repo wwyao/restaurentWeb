@@ -10,21 +10,21 @@
 	<script src="js/angular.js"></script>
 	<script src="js/order.js"></script>
 </head>
-<body ng-app="order">
+<body ng-app="order" ng-controller="orders">
 	<div class="header">
 		<span>小明订座</span><span>订单详情</span>
 	</div>
 	<div class="main">
 		<div class="nav">
-			<span class="active">未付款的订单</span><!--
-			--><span>预定成功的订单</span><!--
-			--><span>其它订单</span>-=-==
+			<span class="active" ng-click="navClick(1)">未付款的订单</span><!--
+			--><span ng-click="navClick(2)">预定成功的订单</span><!--
+			--><span ng-click="navClick(3)">其它订单</span>
 		</div>
-		<ul class="list" ng-controller="orders">
+		<ul class="list" >
 			<li ng-repeat="item in showData" class="list-item">
 				<img ng-src="{{item.imgSrc}}" alt="">
 				<div class="left" >
-					<p>{{item.name}}</p>
+					<p>{{item.restaurentName}}</p>
 					<p>状态：{{item.statu}}</p>
 					<p>预定时间：{{item.time}}</p>
 					<p>预定人数：{{item.peopleNum}}</p>

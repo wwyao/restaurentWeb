@@ -23,7 +23,7 @@ angular.module('order',[])
 		};
 
 		$http({
-			url:"http://localhost:8080/restaurentServer/GetOrders",
+			url:"http://localhost:8080/restaurentServer/GetOrders?statu=0&userName="+window.window.sessionStorage.userName,
 			method:'GET'
 		}).success(function(data){
 			// $scope.unpayData = data;
@@ -31,16 +31,17 @@ angular.module('order',[])
 			console.log(data);
 		});
 
-		$('.nav span').on('click',function($scope){
+		$scope.navClick = function(id){
+			
 			for(var i = 0;i < $('.nav span').length;i++){
 				$('.nav span').eq(i).removeClass('active');
 			}
-			$(this).addClass('active');
-	     	var id = $(this).index();
-	      	switch(id){
+			$('.nav span').eq(id-1).addClass('active');
+	     	// var id = $(this).index();
+	      	switch(id-1){
 				case 0: 
 					$http({
-						url:"http://localhost:8080/restaurentServer/GetOrders",
+						url:"http://localhost:8080/restaurentServer/GetOrders?statu=0&userName="+window.window.sessionStorage.userName,
 						method:'GET'
 					}).success(function(data){
 						$scope.showData = data;
@@ -49,7 +50,7 @@ angular.module('order',[])
 					break;
 				case 1: 
 					$http({
-						url:"http://localhost:8080/restaurentServer/GetOrders",
+						url:"http://localhost:8080/restaurentServer/GetOrders?statu=1&userName="+window.window.sessionStorage.userName,
 						method:'GET'
 					}).success(function(data){
 						$scope.showData = data;
@@ -58,7 +59,7 @@ angular.module('order',[])
 					break;
 				case 2: 
 					$http({
-						url:"http://localhost:8080/restaurentServer/GetOrders",
+						url:"http://localhost:8080/restaurentServer/GetOrders?statu=2&userName="+window.window.sessionStorage.userName,
 						method:'GET'
 					}).success(function(data){
 						$scope.showData = data;
@@ -67,5 +68,5 @@ angular.module('order',[])
 					break;
 				default:console.log('fail');
 	      	}
-		});
+		};
 	});

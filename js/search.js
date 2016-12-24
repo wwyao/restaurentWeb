@@ -51,10 +51,12 @@ function addOrder(){
 	if(scope.loginBtnText === "登录"){
 		alert('请先登录！');
 	}else{
+		console.log($('.order').serialize()+'&statu=0&userName='+scope.loginBtnText+'&restaurentName=aszdas'+'&restaurentId='+scope.detailData.id+'&bookMoney=RMB15');
 		$.ajax({
 			type: 'POST',
 			url: 'http://localhost:8080/restaurentServer/AddOrder',
-			data: $('.order').serialize()+'&statu=未付款&userName='+scope.loginBtnText,
+//			data: $('.order').serialize()+'&statu=0&userName='+scope.loginBtnText+'&restaurentName='+scope.detailData.title+'&restaurentId='+scope.detailData.id+'&bookMoney=15',
+			data: $('.order').serialize()+'&statu=0&userName='+scope.loginBtnText+'&restaurentName=aszdas'+'&restaurentId='+scope.detailData.id+'&bookMoney=RMB15',
 			success: function(msg) {
 				alert('提交订单成功！');
 			},
@@ -237,7 +239,28 @@ angular.module('search',[])
 		  	});
 		});
 
+		// 选择城市，change事件
+	$('.city').change(function(e){
+		if($('.city').val() === '北京'){
+			getData('beijing');
+		}else if($('.city').val() === '广州'){
+			getData('guangzhou');
+		}else{
+			alert('暂无该地区的数据！');
+		}
 		
+		// alert($('.city').val());
+	});
+
+	function getData(area){
+		$http({
+			url:"http://localhost:8080/restaurentServer/AllRectaurent?area="+area,
+			method:'GET'
+		}).success(function(data){
+			// console.log(data);
+			$scope.hotData = data;
+		});
+	}
 
 		$scope.itemClick = function($event,id){
 			for(let i = 0;i < $scope.results.length;i++){
@@ -314,7 +337,7 @@ angular.module('search',[])
 			switch($event.currentTarget.id){
 				case 'nb1':
 					$http({
-						url:"http://localhost:8080/restaurentServer/Restaurent?start=0",
+						url:"http://localhost:8080/restaurentServer/Restaurent?start=0&count=10",
 						method:'GET'
 					}).success(function(data){
 						$scope.results = data;
@@ -350,8 +373,33 @@ angular.module('search',[])
 					break;
 			}
 
-		}
+		};
+		
+		$scope.foodClick = function($index){
+			for(var i = 0;i < $('.food').length;i++){
+				$('.food').eq(i).css('color','#000');
+			}
+			$('.food').eq($index).css('color','red');
+		};
+		$scope.areaClick = function($index){
+			for(var i = 0;i < $('.area').length;i++){
+				$('.area').eq(i).css('color','#000');
+			}
+			$('.area').eq($index).css('color','red');
+		};
+		$scope.kindClick = function($index){
+			for(var i = 0;i < $('.kind').length;i++){
+				$('.kind').eq(i).css('color','#000');
+			}
+			$('.kind').eq($index).css('color','red');
+		};
+		$scope.moneyClick = function($index){
+			for(var i = 0;i < $('.money').length;i++){
+				$('.money').eq(i).css('color','#000');
+			}
+			$('.money').eq($index).css('color','red');
+		};
 
-
+		
 		
 	});
